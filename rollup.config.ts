@@ -8,12 +8,30 @@ import pkg from './package.json';
 export default {
   input: `src/main.ts`,
   output: [
-    { file: pkg.main, name: pkg.name, format: 'umd', sourcemap: true },
+    {
+      file: pkg.main,
+      name: pkg.name,
+      format: 'umd',
+      sourcemap: true,
+      globals: {
+        axios: 'axios',
+        buffer: 'buffer',
+        'hash-wasm': 'hashWasm',
+      },
+    },
     { file: pkg.module, format: 'es', sourcemap: true },
   ],
-  external: [],
+  external: ['crypto-js', 'hash-wasm', 'crc', 'axios'],
   watch: {
     include: 'src/**',
   },
-  plugins: [json(), typescript({ useTsconfigDeclarationDir: true }), commonjs(), resolve(), sourceMaps()],
+  plugins: [
+    json(),
+    typescript({ useTsconfigDeclarationDir: true }),
+    commonjs(),
+    resolve({
+      preferBuiltins: false,
+    }),
+    sourceMaps(),
+  ],
 };

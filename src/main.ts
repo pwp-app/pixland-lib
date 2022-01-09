@@ -2,9 +2,12 @@ import axios from 'axios';
 import crc32 from 'crc/crc32';
 import { PixlandConfig, DEFAULT_CONFIG } from './constants';
 import { PixlandUserData, PixlandUserStorage, UserDataResponse } from './types';
+import { InvalidError } from './types/error';
 import { signRequest } from './utils/sign';
 import {
+  clearUserStorage,
   createEmptyUserData,
+  decryptUserData,
   encryptUserData,
   enhancePassword,
   getUserKey,
@@ -44,6 +47,7 @@ export default class Pixland {
       userKey,
     };
     await this.uploadUserData(createEmptyUserData(username));
+    saveUserStorage(this.userStorage);
   }
 
   public async login(username: string, password: string) {
@@ -61,6 +65,27 @@ export default class Pixland {
       userKey,
     };
     saveUserStorage(this.userStorage);
+  }
+
+  public async logout() {
+    this.userStorage = null;
+    clearUserStorage();
+  }
+
+  public async getUserData() {
+    const userKey = this.userStorage?.userKey;
+    const password = this.userStorage?.password;
+    if (!userKey || !password) {
+      throw new InvalidError('Invalid or empty user info.');
+    }
+    const res = await axios.get(this.getFileUrl(userKey));
+    const encrypted = res.data;
+    const decrypted = decryptUserData(encrypted, password);
+    return decrypted;
+  }
+
+  public async updateUserData(userData: PixlandUserData) {
+    await this.uploadUserData(userData);
   }
 
   private getFileUrl(userKey: string) {
@@ -110,7 +135,7 @@ export default class Pixland {
     const userKey = this.userStorage?.userKey;
     const password = this.userStorage?.password;
     if (!userKey || !password) {
-      throw new Error('Invalid or empty user info in user storage.');
+      throw new InvalidError('Invalid or empty user info in user storage.');
     }
     const fileData = encryptUserData(userData, password);
     const formData = new FormData();

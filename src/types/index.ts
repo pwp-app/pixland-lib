@@ -10,6 +10,7 @@ export interface PixlandUserData {
   picData: unknown[]; // full pic data
   username: string;
   createAt: number;
+  lastUpdateAt: number;
 }
 
 export interface APIResponse {

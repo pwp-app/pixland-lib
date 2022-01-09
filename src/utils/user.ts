@@ -30,6 +30,10 @@ export const saveUserStorage = (userStorage: PixlandUserStorage) => {
   window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userStorage));
 };
 
+export const clearUserStorage = () => {
+  window.localStorage.removeItem(USER_STORAGE_KEY);
+};
+
 export const createEmptyUserData = (username: string): PixlandUserData => {
   return {
     history: [],
@@ -37,6 +41,7 @@ export const createEmptyUserData = (username: string): PixlandUserData => {
     picData: [],
     username,
     createAt: Date.now(),
+    lastUpdateAt: Date.now(),
   };
 };
 
