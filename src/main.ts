@@ -137,7 +137,13 @@ export default class Pixland {
     if (!userKey || !password) {
       throw new InvalidError('Invalid or empty user info in user storage.');
     }
-    const fileData = encryptUserData(userData, password);
+    const fileData = encryptUserData(
+      {
+        ...userData,
+        lastUpdateAt: Date.now(),
+      },
+      password,
+    );
     const formData = new FormData();
     formData.append('resource_key', this.getFileKey(userKey));
     formData.append('upload_token', uploadToken);
