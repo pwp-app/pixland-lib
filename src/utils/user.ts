@@ -5,15 +5,15 @@ import AES from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
 
 export const getUserKey = async (username: string, password: string) => {
-  const hmac = (await createHMAC(createSHA256(), 'pixland')).update(`${username}_${password}`).digest('hex');
-  return (await createHMAC(createSHA1(), 'pixland')).update(hmac).digest('hex');
+  const hmac = (await createHMAC(createSHA256(), 'pixland')).init().update(`${username}_${password}`).digest('hex');
+  return (await createHMAC(createSHA1(), 'pixland')).init().update(hmac).digest('hex');
 };
 
 export const enhancePassword = async (password: string) => {
   const sha = await createSHA256();
   let res = password;
   for (let i = 0; i < 16; i++) {
-    res = sha.update(res).digest('hex');
+    res = sha.init().update(res).digest('hex');
   }
   return res;
 };
