@@ -145,8 +145,8 @@ export default class Pixland {
       password,
     );
     const formData = new FormData();
-    formData.append('resource_key', this.getFileKey(userKey));
-    formData.append('upload_token', uploadToken);
+    formData.append('key', this.getFileKey(userKey));
+    formData.append('token', uploadToken);
     formData.append('fileName', `${userKey}.json`);
     formData.append('fileBinaryData', fileData);
     formData.append('crc32', crc32(fileData).toString(16));
