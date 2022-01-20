@@ -152,7 +152,7 @@ export default class Pixland {
     formData.append('crc32', crc32(fileData).toString(16));
     await axios.post('https://up-as0.qiniup.com/', formData, {
       headers: {
-        Authorization: `Uptoken ${uploadToken}`,
+        Authorization: `UpToken ${uploadToken}`,
         'X-Reqid': userKey,
       },
     });
