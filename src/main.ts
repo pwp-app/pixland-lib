@@ -123,7 +123,7 @@ export default class Pixland {
       password: this.userStorage?.password,
     };
     const res = await axios.post<UserDataResponse>(this.getApiUrl('userData/getUploadToken'), {
-      data: payload,
+      ...payload,
       timestamp: now,
       sign: await signRequest({ payload, timestamp: now }),
     });
