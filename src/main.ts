@@ -97,7 +97,7 @@ export default class Pixland {
   }
 
   private getApiUrl(apiName: string) {
-    return `https://${this.config.fileHost}/${apiName}`;
+    return `https://${this.config.apiHost}/${apiName}`;
   }
 
   private async userDataExists(userKey: string) {
