@@ -147,9 +147,8 @@ export default class Pixland {
     const formData = new FormData();
     formData.append('key', this.getFileKey(userKey));
     formData.append('token', uploadToken);
-    formData.append('fileName', `${userKey}.json`);
-    formData.append('fileBinaryData', fileData);
-    formData.append('crc32', crc32(fileData).toString(16));
+    formData.append('file', new Blob([fileData], { type: 'application/json' }), `${userKey}.json`);
+    formData.append('crc32', crc32(fileData).toString(10));
     await axios.post('https://up-as0.qiniup.com/', formData, {
       headers: {
         Authorization: `UpToken ${uploadToken}`,
