@@ -89,11 +89,11 @@ export default class Pixland {
   }
 
   private getFileUrl(userKey: string) {
-    return `https://${this.config.fileHost}/userdata/${userKey}.json`;
+    return `https://${this.config.fileHost}/userData/${userKey}.json`;
   }
 
   private getFileKey(userKey: string) {
-    return `userdata/${userKey}.json`;
+    return `userData/${userKey}.json`;
   }
 
   private getApiUrl(apiName: string) {
