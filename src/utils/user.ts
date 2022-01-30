@@ -38,7 +38,7 @@ export const createEmptyUserData = (username: string): PixlandUserData => {
   return {
     history: [],
     collection: [],
-    picData: [],
+    picData: {},
     username,
     createAt: Date.now(),
     lastUpdateAt: Date.now(),

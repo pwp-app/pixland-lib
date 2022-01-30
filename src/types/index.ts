@@ -4,10 +4,15 @@ export interface PixlandUserStorage {
   userKey: string;
 }
 
+export interface RecordItem {
+  i: number;
+  t: number;
+}
+
 export interface PixlandUserData {
-  history: number[]; // pic ids
-  collection: number[]; // pic ids
-  picData: unknown[]; // full pic data
+  history: RecordItem[]; // pic ids
+  collection: RecordItem[]; // pic ids
+  picData: Record<string | number, unknown>; // full pic data
   username: string;
   createAt: number;
   lastUpdateAt: number;
