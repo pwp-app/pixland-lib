@@ -3,6 +3,7 @@ import crc32 from 'crc/crc32';
 import { PixlandConfig, DEFAULT_CONFIG } from './constants';
 import { PixlandUserData, PixlandUserStorage, UserDataResponse } from './types';
 import { InvalidError } from './types/error';
+import { defenseWrongDataType } from './utils/defense';
 import { signRequest } from './utils/sign';
 import {
   clearUserStorage,
@@ -81,7 +82,7 @@ export default class Pixland {
     const res = await axios.get(this.getFileUrl(userKey));
     const encrypted = res.data;
     const decrypted = decryptUserData(encrypted, password);
-    return decrypted;
+    return defenseWrongDataType(decrypted);
   }
 
   public async updateUserData(userData: PixlandUserData) {
