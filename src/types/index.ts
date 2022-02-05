@@ -16,6 +16,7 @@ export interface PixlandUserData {
   username: string;
   createAt: number;
   lastUpdateAt: number;
+  lastHistoryClear?: number;
 }
 
 export interface APIResponse {
