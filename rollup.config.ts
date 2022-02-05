@@ -17,14 +17,14 @@ export default {
       globals: {
         axios: 'axios',
         buffer: 'buffer',
-        'crc/crc32': 'crc32',
+        'crc/mjs/crc32': 'crc32',
         'hash-wasm': 'hashWasm',
         'crypto-js/aes': 'cryptoAes',
       },
     },
     { file: pkg.module, format: 'es', sourcemap: true },
   ],
-  external: ['crypto-js/aes', 'hash-wasm', 'crc/crc32', 'axios'],
+  external: ['crypto-js/aes', 'hash-wasm', 'crc/mjs/crc32', 'axios'],
   watch: {
     include: 'src/**',
   },
