@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "watch": "rollup -c rollup.config.ts -w",
-    "build": "rimraf ./dist && tsc --module commonjs && rollup -c rollup.config.ts && rimraf ./dist/lib"
+    "build": "rimraf ./dist && tsc --module commonjs && rollup -c rollup.config.ts && rimraf ./dist/lib",
+    "release": "npm run build && npm publish --registry=\"https://registry.npmjs.org\""
   },
   "author": "BackRunner",
   "license": "MIT",
