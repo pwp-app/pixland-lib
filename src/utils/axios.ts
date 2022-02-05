@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-axios.defaults.timeout = 5 * 1000;
-axios.defaults.withCredentials = false;
+const instance = axios.create({
+  timeout: 5 * 1000,
+  withCredentials: false,
+});
 
-export default axios;
+export default instance;
