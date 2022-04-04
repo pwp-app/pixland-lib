@@ -1,6 +1,6 @@
 {
   "name": "pixland",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Library of Pixland for web apps",
   "main": "dist/pixland.umd.js",
   "module": "dist/pixland.esm.js",
