@@ -23,6 +23,9 @@ export default class Pixland {
   protected constructor(config: PixlandConfig) {
     this.config = config || DEFAULT_CONFIG;
     this.userStorage = getUserStorage();
+    if (this.userStorage?.userKey) {
+      window.dispatchEvent(new Event('pixland_user-login'));
+    }
   }
 
   public isLogin() {
@@ -49,6 +52,7 @@ export default class Pixland {
     };
     await this.uploadUserData(createEmptyUserData(username));
     saveUserStorage(this.userStorage);
+    window.dispatchEvent(new Event('pixland_user-login'));
   }
 
   public async login(username: string, password: string) {
@@ -66,11 +70,13 @@ export default class Pixland {
       userKey,
     };
     saveUserStorage(this.userStorage);
+    window.dispatchEvent(new Event('pixland_user-login'));
   }
 
   public async logout() {
     this.userStorage = null;
     clearUserStorage();
+    window.dispatchEvent(new Event('pixland_user-logout'));
   }
 
   public async getUserData() {
