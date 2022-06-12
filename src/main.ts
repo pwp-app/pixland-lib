@@ -96,15 +96,7 @@ export default class Pixland {
   }
 
   private getFileUrl(userKey: string) {
-    return `https://${this.config.fileHost}/userData/${userKey}.json`;
-  }
-
-  private getFileKey(userKey: string) {
-    return `userData/${userKey}.json`;
-  }
-
-  private getApiUrl(apiName: string) {
-    return `https://${this.config.apiHost}/${apiName}`;
+    return `https://${this.config.fileHost}/userData/${userKey}`;
   }
 
   private async userDataExists(userKey: string) {
@@ -123,43 +115,33 @@ export default class Pixland {
     }
   }
 
-  private async getUploadToken() {
-    const now = Date.now();
-    const payload = {
-      username: this.userStorage?.username,
-      password: this.userStorage?.password,
-    };
-    const res = await axios.post<UserDataResponse>(this.getApiUrl('userData/getUploadToken'), {
-      ...payload,
-      timestamp: now,
-      sign: await signRequest({ payload, timestamp: now }),
-    });
-    return res.data.data.upload_token;
-  }
-
   private async uploadUserData(userData: PixlandUserData) {
-    const uploadToken = await this.getUploadToken();
     const userKey = this.userStorage?.userKey;
-    const password = this.userStorage?.password;
+    const username = this.userStorage?.username || '';
+    const password = this.userStorage?.password || '';
     if (!userKey || !password) {
       throw new InvalidError('Invalid or empty user info in user storage.');
     }
+    const nowTs = Date.now();
     const fileData = encryptUserData(
       {
         ...userData,
-        lastUpdateAt: Date.now(),
+        lastUpdateAt: nowTs,
       },
       password,
     );
-    const formData = new FormData();
-    formData.append('key', this.getFileKey(userKey));
-    formData.append('token', uploadToken);
-    formData.append('file', new Blob([fileData], { type: 'application/json' }), `${userKey}.json`);
-    formData.append('crc32', crc32(fileData).toString(10));
-    await axios.post('https://up-as0.qiniup.com/', formData, {
+    await axios.put(this.getFileUrl(userKey), fileData, {
       headers: {
-        Authorization: `UpToken ${uploadToken}`,
-        'X-Reqid': userKey,
+        'x-pixland-n': username,
+        'x-pixland-a': password,
+        'x-pixland-t': `${nowTs}`,
+        'x-pixland-s': await signRequest({
+          payload: {
+            username,
+            password,
+          },
+          timestamp: nowTs,
+        }),
       },
     });
   }
