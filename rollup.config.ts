@@ -19,12 +19,11 @@ export default {
         buffer: 'buffer',
         'hash-wasm': 'hashWasm',
         'crypto-js/aes': 'cryptoAes',
-        'crc/mjs/crc32': 'crc32',
       },
     },
     { file: pkg.module, format: 'es', sourcemap: true },
   ],
-  external: ['crypto-js/aes', 'hash-wasm', 'axios', 'crc/mjs/crc32'],
+  external: ['crypto-js/aes', 'hash-wasm', 'axios'],
   watch: {
     include: 'src/**',
   },

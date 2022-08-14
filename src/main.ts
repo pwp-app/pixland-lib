@@ -1,5 +1,4 @@
 import axios from 'axios';
-import crc32 from 'crc/mjs/crc32';
 import { PixlandConfig, DEFAULT_CONFIG } from './constants';
 import { PixlandUserData, PixlandUserStorage, UserDataResponse } from './types';
 import { InvalidError } from './types/error';
