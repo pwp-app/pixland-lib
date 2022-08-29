@@ -84,9 +84,7 @@ export default class Pixland {
     if (!userKey || !password) {
       throw new InvalidError('Invalid or empty user info.');
     }
-    console.debug('pixland request will sent', this.getFileUrl(userKey));
     const res = await axios.get(this.getFileUrl(userKey));
-    console.debug('pixland res', res);
     const encrypted = res.data;
     const decrypted = decryptUserData(encrypted, password);
     return defenseWrongDataType(decrypted);
