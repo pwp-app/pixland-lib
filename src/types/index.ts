@@ -11,7 +11,7 @@ export interface RecordItem {
 
 export interface PixlandUserData {
   history: RecordItem[]; // pic ids
-  collection: RecordItem[]; // pic ids
+  collection: Record<string, RecordItem[]>; // pic ids
   picData: Record<string | number, unknown>; // full pic data
   username: string;
   createAt: number;

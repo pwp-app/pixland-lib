@@ -37,7 +37,7 @@ export const clearUserStorage = () => {
 export const createEmptyUserData = (username: string): PixlandUserData => {
   return {
     history: [],
-    collection: [],
+    collection: {},
     picData: {},
     username,
     createAt: Date.now(),
